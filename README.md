@@ -24,3 +24,11 @@ vae_train.ipynb -
 utils:
 
 weights:
+
+
+Download https://git-lfs.com/
+git clone https://github.com/Kejnain/Semiotics_Thesis
+git lfs install
+git lfs pull
+
+
