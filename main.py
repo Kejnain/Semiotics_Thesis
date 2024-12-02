@@ -3,10 +3,10 @@ import numpy as np
 import pandas as pd
 import torch
 import tkinter as tk 
+import tensorflow as tf
 from utils.vae import VAE
 from sklearn.preprocessing import MinMaxScaler
 from py.gui import gui
-import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.resnet50 import ResNet50
 from PIL import Image, ImageTk
