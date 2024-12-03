@@ -11,12 +11,12 @@
 ---
 
 ## Data
-- **goemotions.csv**: Dataset from the GoEmotions repository. [Source]https://paperswithcode.com/dataset/goemotions
-- **scraped_shapes.csv**: Dataset containing images scraped from various sources. [Source]https://mrmrsenglish.com/different-shape-names/
+- **goemotions.csv**: Dataset from the GoEmotions repository. [[Source](https://paperswithcode.com/dataset/goemotions)]
+- **scraped_shapes.csv**: Dataset containing images scraped from various sources. [[Source](https://mrmrsenglish.com/different-shape-names)]
 - **shapes_with_colours.csv**: Dataset with RGB color values added to shapes.
 - **shapes.csv**: Final dataset prepared for model training.
 - **survey_cleaned.csv**: Processed survey responses, ready for training.
-- **survey_responses.csv**: Raw survey responses. [Link to survey]https://forms.gle/W7vfHjp9CdYtiNQ36
+- **survey_responses.csv**: Raw survey responses. [[Link to survey](https://forms.gle/W7vfHjp9CdYtiNQ36)]
 - **images/**: Directory containing images extracted from URLs in `shapes.csv`.
 
 ---
