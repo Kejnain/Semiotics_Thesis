@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import LeakyReLU
 
 class VAE(nn.Module):
     def __init__(self, latent_dim=28, image_size=(200, 200)):
@@ -36,23 +37,23 @@ class VAE(nn.Module):
         return int(torch.prod(torch.tensor(x.size())))
 
     def encoder(self, x, sentiment_vector):
-        x = nn.functional.relu(self.bn1(self.conv1(x)))
-        x = nn.functional.relu(self.bn2(self.conv2(x)))
-        x = nn.functional.relu(self.bn3(self.conv3(x)))
+        x = LeakyReLU(negative_slope=0.2)(self.bn1(self.conv1(x)))
+        x = LeakyReLU(negative_slope=0.2)(self.bn2(self.conv2(x)))
+        x = LeakyReLU(negative_slope=0.2)(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
-        h1 = nn.functional.relu(self.fc1(x))
+        h1 = LeakyReLU(negative_slope=0.2)(self.fc1(x))
         mu = self.fc21(h1) + sentiment_vector 
         logvar = self.fc22(h1)
         return mu, logvar
 
     def decoder(self, z):
-        h3 = nn.functional.relu(self.fc3(z))
-        h4 = nn.functional.relu(self.fc4(h3))
+        h3 = LeakyReLU(negative_slope=0.2)(self.fc3(z))
+        h4 = LeakyReLU(negative_slope=0.2)(self.fc4(h3))
         batch_size = z.size(0)
         h4 = h4.view(batch_size, 128, 25, 25)
 
-        x = nn.functional.relu(self.deconv1(h4))
-        x = nn.functional.relu(self.deconv2(x))
+        x = LeakyReLU(negative_slope=0.2)(self.deconv1(h4))
+        x = LeakyReLU(negative_slope=0.2)(self.deconv2(x))
         x = torch.sigmoid(self.deconv3(x))  
         return x
 
