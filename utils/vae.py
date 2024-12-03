@@ -2,11 +2,10 @@ import torch
 import torch.nn as nn
 
 class VAE(nn.Module):
-    def __init__(self, latent_dim=512, image_size=(200, 200)):
+    def __init__(self, latent_dim=28, image_size=(200, 200)):
         super(VAE, self).__init__()
         self.latent_dim = latent_dim
         self.image_size = image_size
-        
 
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=32, kernel_size=4, stride=2, padding=1)
         self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4, stride=2, padding=1)
@@ -25,7 +24,6 @@ class VAE(nn.Module):
         self.deconv2 = nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, padding=1)
         self.deconv3 = nn.ConvTranspose2d(32, 3, kernel_size=4, stride=2, padding=1)
 
-  
         self.bn1 = nn.BatchNorm2d(32)
         self.bn2 = nn.BatchNorm2d(64)
         self.bn3 = nn.BatchNorm2d(128)
@@ -37,13 +35,13 @@ class VAE(nn.Module):
         x = self.conv3(x)
         return int(torch.prod(torch.tensor(x.size())))
 
-    def encoder(self, x):
+    def encoder(self, x, sentiment_vector):
         x = nn.functional.relu(self.bn1(self.conv1(x)))
         x = nn.functional.relu(self.bn2(self.conv2(x)))
         x = nn.functional.relu(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
         h1 = nn.functional.relu(self.fc1(x))
-        mu = self.fc21(h1)
+        mu = self.fc21(h1) + sentiment_vector 
         logvar = self.fc22(h1)
         return mu, logvar
 
@@ -58,8 +56,8 @@ class VAE(nn.Module):
         x = torch.sigmoid(self.deconv3(x))  
         return x
 
-    def forward(self, x):
-        mu, logvar = self.encoder(x)
+    def forward(self, x, sentiment_vector):
+        mu, logvar = self.encoder(x, sentiment_vector)
         z = self.reparameterize(mu, logvar)
         recon_x = self.decoder(z)
         return recon_x, mu, logvar
