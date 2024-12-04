@@ -26,7 +26,6 @@
 - `sentiment_model.pkl`: Pre-trained sentiment analysis model.
 - `vae_model.pth`: Variational Autoencoder model.
 
-
 ## Test 
 - `test_sentiment.ipynb`: Test cases and evaluation for the sentiment analysis model.
 - `test_vae.ipynb`: Test cases and evaluation for the Variational Autoencoder.
